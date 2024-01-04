@@ -58,3 +58,11 @@ class Window:
         mouse_x_check =  (mouse_pos[0] >= self.x and mouse_pos[0] <= self.x + self.width + self.border_width * 2)
         mouse_y_check = (mouse_pos[1] >= self.y and mouse_pos[1] <= self.y + self.height + 20 + self.border_width * 2)
         return mouse_x_check and mouse_y_check
+
+    def is_mouse_on_x(self, mouse_pos: tuple):
+        if self.is_mouse_in(mouse_pos):
+            x_pos = mouse_pos[0] - self.x
+            y_pos = mouse_pos[1] - self.y
+            if x_pos >= self.width + self.border_width - 20 and x_pos <= self.width + self.border_width and y_pos >= self.border_width and y_pos <= self.border_width + 20:
+                return True
+        return False

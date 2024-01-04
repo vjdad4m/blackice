@@ -26,7 +26,6 @@ class WindowManager:
     def update(self):
         # Get mouse position
         mouse_pos = pg.mouse.get_pos()
-        print(mouse_pos)
         # Get mouse button state
         mouse_pressed = pg.mouse.get_pressed()
         
@@ -43,7 +42,19 @@ class WindowManager:
 
         # Move focused window to end of the list
         if self.current_focus_index is not None and self.current_focus_index != len(self.windows) - 1:
-            self.windows.append(self.windows.pop(self.current_focus_index))
-   
+            if len(self.windows) > self.current_focus_index:
+                self.windows.append(self.windows.pop(self.current_focus_index))
+            else:
+                self.current_focus_index = len(self.windows) - 1
+
+        # Update windows
         for idx, window in enumerate(self.windows):
-            window.update(is_focused=idx == self.current_focus_index)
+            is_current_focus = idx == self.current_focus_index
+            window.update(is_focused=is_current_focus)
+            # Check if window is closable and if it is focused
+            if is_current_focus and window.is_closable:
+                # Check if close is clicked
+                if mouse_pressed[0]:
+                    if window.is_mouse_on_x(mouse_pos):
+                        self.unregister_window(window)
+                

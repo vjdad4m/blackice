@@ -13,6 +13,7 @@ if __name__ == "__main__":
     
     win1 = Window(0, 0, 400, 300, "Test Window - 1", border_color=(0, 255, 0))
     win2 = Window(130, 50, 400, 300, "Test Window - 2", border_color=(0, 0, 255), border_width=10, is_closable=False)
+    win3 = Window(250, 350, 400, 300, "Test Window - 3", border_color=(255, 0, 0), border_width=15)
 
     def win1_draw():
         pg.draw.rect(win1.surface, (255, 0, 0), (0, 0, 100, 100))
@@ -32,6 +33,7 @@ if __name__ == "__main__":
 
     winmngr.register_window(win1)
     winmngr.register_window(win2)
+    winmngr.register_window(win3)
 
     def draw():
         winmngr.draw()
