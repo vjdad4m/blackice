@@ -20,14 +20,7 @@ if __name__ == "__main__":
         pg.draw.rect(win1.surface, (0, 255, 0), (100, 100, 100, 100))
         pg.draw.rect(win1.surface, (0, 0, 255), (200, 200, 100, 100))
 
-    def win1_update(is_focused: bool):
-        if is_focused:
-            print("Window 1 is focused") 
-        else:
-            print("Window 1 is not focused")
-
     win1.draw = win1_draw
-    win1.update = win1_update
 
     winmngr = WindowManager(app)
 

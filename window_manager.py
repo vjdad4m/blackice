@@ -8,6 +8,7 @@ class WindowManager:
         self.windows = []
         self.current_focus_index = 0
         self.app = app
+        self.previous_moue_state = pg.mouse.get_pressed()
     
     def register_window(self, window: Window):
         self.windows.append(window)
@@ -29,8 +30,10 @@ class WindowManager:
         # Get mouse button state
         mouse_pressed = pg.mouse.get_pressed()
         
+        continuous_click = mouse_pressed[0] and self.previous_moue_state[0]
+
         # Set focus to uppermost window
-        if mouse_pressed[0]:
+        if mouse_pressed[0] and not continuous_click:
             for i in reversed(range(len(self.windows))):
                 window = self.windows[i]
                 if window.is_visible:
@@ -44,8 +47,8 @@ class WindowManager:
         if self.current_focus_index is not None and self.current_focus_index != len(self.windows) - 1:
             if len(self.windows) > self.current_focus_index:
                 self.windows.append(self.windows.pop(self.current_focus_index))
-            else:
-                self.current_focus_index = len(self.windows) - 1
+
+        self.current_focus_index = len(self.windows) - 1
 
         # Update windows
         for idx, window in enumerate(self.windows):
@@ -57,4 +60,7 @@ class WindowManager:
                 if mouse_pressed[0]:
                     if window.is_mouse_on_x(mouse_pos):
                         self.unregister_window(window)
+        
+        # Update previous mouse state
+        self.previous_moue_state = mouse_pressed
                 
