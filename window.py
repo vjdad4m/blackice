@@ -1,5 +1,7 @@
 import pygame as pg
 
+from ui import UIComponent
+
 class Window:
     def __init__(self, x: int, y: int, width: int, height: int, title: str, border_color: tuple = (0, 0, 0), border_width: int = 5, is_closable: bool = True, is_movable: bool = True):
         self.x = x
@@ -75,3 +77,7 @@ class Window:
             if x_pos >= self.border_width and x_pos <= self.width + self.border_width and y_pos >= self.border_width and y_pos <= self.border_width + 20:
                 return True
         return False
+
+    def draw_ui_component(self, ui_component: UIComponent):
+        if ui_component.is_visible:
+            self.surface.blit(ui_component.surface, (ui_component.x, ui_component.y))

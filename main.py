@@ -3,6 +3,7 @@ import pygame as pg
 from application import Application
 from window import Window
 from window_manager import WindowManager
+from ui import TextLabel
 
 WWIDTH = 800
 WHEIGHT = 600
@@ -15,13 +16,11 @@ if __name__ == "__main__":
     win2 = Window(130, 50, 400, 300, "Test Window - 2", border_color=(0, 0, 255), border_width=10, is_closable=False)
     win3 = Window(250, 350, 150, 300, "Test Window - 3", border_color=(255, 0, 0), border_width=15)
 
-    def win1_draw(is_focused: bool):
-        pg.draw.rect(win1.surface, (255, 0, 0), (0, 0, 100, 100))
-        pg.draw.rect(win1.surface, (0, 255, 0), (100, 100, 100, 100))
-        pg.draw.rect(win1.surface, (0, 0, 255), (200, 200, 100, 100))
+    label = TextLabel(0, 0, 400, 200, "Hello, World!", pg.font.SysFont("Arial", 20), (0, 0, 0), (255, 255, 255), centered=True)
 
-        if is_focused:
-            pg.draw.circle(win1.surface, (0, 0, 0), (200, 150), 30)
+    def win1_draw(is_focused: bool):
+        label.draw()
+        win1.draw_ui_component(label)
 
     def win1_update(is_focused: bool):
         pass
