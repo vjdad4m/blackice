@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Window:
-    def __init__(self, x: int, y: int, width: int, height: int, title: str, border_color: tuple = (0, 0, 0), border_width: int = 5, is_closable: bool = True):
+    def __init__(self, x: int, y: int, width: int, height: int, title: str, border_color: tuple = (0, 0, 0), border_width: int = 5, is_closable: bool = True, is_movable: bool = True):
         self.x = x
         self.y = y
         self.width = width
@@ -10,6 +10,8 @@ class Window:
         self.border_color = border_color
         self.border_width = border_width
         self.is_closable = is_closable
+        self.is_movable = is_movable
+        self.is_moving = False
         # Create window surface
         self.surface = pg.Surface((self.width, self.height))
         self.header = self.create_window_header()
@@ -64,5 +66,13 @@ class Window:
             x_pos = mouse_pos[0] - self.x
             y_pos = mouse_pos[1] - self.y
             if x_pos >= self.width + self.border_width - 20 and x_pos <= self.width + self.border_width and y_pos >= self.border_width and y_pos <= self.border_width + 20:
+                return True
+        return False
+
+    def is_mouse_on_banner(self, mouse_pos: tuple):
+        if self.is_mouse_in(mouse_pos):
+            x_pos = mouse_pos[0] - self.x
+            y_pos = mouse_pos[1] - self.y
+            if x_pos >= self.border_width and x_pos <= self.width + self.border_width and y_pos >= self.border_width and y_pos <= self.border_width + 20:
                 return True
         return False

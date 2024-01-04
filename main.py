@@ -9,7 +9,7 @@ WHEIGHT = 600
 FPS = 60
 
 if __name__ == "__main__":
-    app = Application(WWIDTH, WHEIGHT, "Test Application", FPS) 
+    app = Application(WWIDTH, WHEIGHT, "Test Application", FPS)
     
     win1 = Window(0, 0, 400, 300, "Test Window - 1", border_color=(0, 255, 0))
     win2 = Window(130, 50, 400, 300, "Test Window - 2", border_color=(0, 0, 255), border_width=10, is_closable=False)

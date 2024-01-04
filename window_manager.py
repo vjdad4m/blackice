@@ -8,7 +8,8 @@ class WindowManager:
         self.windows = []
         self.current_focus_index = 0
         self.app = app
-        self.previous_moue_state = pg.mouse.get_pressed()
+        self.previous_mouse_state = pg.mouse.get_pressed()
+        self.previous_mouse_pos = pg.mouse.get_pos()
     
     def register_window(self, window: Window):
         self.windows.append(window)
@@ -30,7 +31,7 @@ class WindowManager:
         # Get mouse button state
         mouse_pressed = pg.mouse.get_pressed()
         
-        continuous_click = mouse_pressed[0] and self.previous_moue_state[0]
+        continuous_click = mouse_pressed[0] and self.previous_mouse_state[0]
 
         # Set focus to uppermost window
         if mouse_pressed[0] and not continuous_click:
@@ -55,12 +56,21 @@ class WindowManager:
             is_current_focus = idx == self.current_focus_index
             window.update(is_focused=is_current_focus)
             # Check if window is closable and if it is focused
-            if is_current_focus and window.is_closable:
-                # Check if close is clicked
+            if is_current_focus:
                 if mouse_pressed[0]:
-                    if window.is_mouse_on_x(mouse_pos):
+                    # Check if close is clicked
+                    if window.is_mouse_on_x(mouse_pos) and window.is_closable:
                         self.unregister_window(window)
-        
-        # Update previous mouse state
-        self.previous_moue_state = mouse_pressed
+                    # Check if window is movable
+                    if (window.is_mouse_on_banner(mouse_pos) or window.is_moving) and window.is_movable:
+                        window.is_moving = True
+                        # Move window
+                        window.x += mouse_pos[0] - self.previous_mouse_pos[0]
+                        window.y += mouse_pos[1] - self.previous_mouse_pos[1]
+                else:
+                    window.is_moving = False    
+
+        # Update previous mouse state and position
+        self.previous_mouse_state = mouse_pressed
+        self.previous_mouse_pos = mouse_pos
                 
