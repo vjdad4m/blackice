@@ -34,14 +34,13 @@ class Window:
             self.header_x_rect.center = (self.width - 10, 10)
             self.header_surface.blit(self.header_x, self.header_x_rect)
 
-
-    def draw(self):
+    def draw(self, is_focused: bool = False):
         pass
 
     def update(self, is_focused: bool = False):
         pass
 
-    def render(self):
+    def render(self, is_focused: bool = False):
         # Create new surface
         new_surface = pg.Surface((self.width + self.border_width * 2, self.height + 20 + self.border_width * 2))
         # Fill border with border color
@@ -49,7 +48,7 @@ class Window:
         # Fill surface with white
         self.surface.fill((255, 255, 255))
         # Render window contents
-        self.draw()
+        self.draw(is_focused=is_focused)
         # Render header
         new_surface.blit(self.header_surface, (self.border_width, self.border_width))
         # Render window

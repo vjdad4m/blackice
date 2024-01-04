@@ -20,9 +20,9 @@ class WindowManager:
         self.windows.remove(window)
 
     def draw(self):
-        for window in self.windows:
+        for index, window in enumerate(self.windows):
             if window.is_visible:
-                win_surface = window.render()
+                win_surface = window.render(is_focused = index == self.current_focus_index)
                 self.app.screen.blit(win_surface, (window.x, window.y))
 
     def update(self):
